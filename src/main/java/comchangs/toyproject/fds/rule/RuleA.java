@@ -5,4 +5,8 @@ package comchangs.toyproject.fds.rule;
  */
 public class RuleA implements DetectionRule
 {
+  public boolean check()
+  {
+    return false;
+  }
 }
