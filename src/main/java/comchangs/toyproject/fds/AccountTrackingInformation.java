@@ -8,6 +8,7 @@ public class AccountTrackingInformation
   private long accountCreationTimestamp;
   private long lastDepositTimestamp;
   private long lastWithdrawTimestamp;
+  private long lastRemittanceTimestamp;
   private long FinalBalance;
 
   public AccountTrackingInformation()
@@ -23,12 +24,14 @@ public class AccountTrackingInformation
       long accountCreationTimestamp,
       long lastDepositTimestamp,
       long lastWithdrawTimestamp,
+      long lastRemittanceTimestamp,
       long finalBalance
   )
   {
     this.accountCreationTimestamp = accountCreationTimestamp;
     this.lastDepositTimestamp = lastDepositTimestamp;
     this.lastWithdrawTimestamp = lastWithdrawTimestamp;
+    this.lastRemittanceTimestamp = lastRemittanceTimestamp;
     FinalBalance = finalBalance;
   }
 
@@ -60,6 +63,16 @@ public class AccountTrackingInformation
   public void setLastWithdrawTimestamp(long lastWithdrawTimestamp)
   {
     this.lastWithdrawTimestamp = lastWithdrawTimestamp;
+  }
+
+  public long getLastRemittanceTimestamp()
+  {
+    return lastRemittanceTimestamp;
+  }
+
+  public void setLastRemittanceTimestamp(long lastRemittanceTimestamp)
+  {
+    this.lastRemittanceTimestamp = lastRemittanceTimestamp;
   }
 
   public long getFinalBalance()
