@@ -6,3 +6,6 @@ mvn package
 
 ## Run
 ./fds.sh ./dev.properties
+
+## Kill
+kill [pid]
