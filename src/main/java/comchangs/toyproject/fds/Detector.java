@@ -21,6 +21,7 @@ public class Detector implements Runnable
   public void detect() {
 
     try {
+      //TODO: DetectionTask by rules
       logger.info(queue.take());
     } catch (InterruptedException e) {
     } catch (Exception e) {
