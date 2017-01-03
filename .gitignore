@@ -91,3 +91,6 @@ hs_err_pid*
 ### Intellij Patch by comchangs ###
 *.iml
 .idea
+
+# comchangs #
+*.log
