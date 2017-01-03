@@ -59,7 +59,6 @@ public class KafkaConsumer implements Runnable
     }
   }
 
-  @Override
   public void run()
   {
     logger.info("KafkaConsumer thread is running");

@@ -4,11 +4,17 @@ import comchangs.toyproject.fds.event.DepositEvent;
 import comchangs.toyproject.fds.event.NewAccountEvent;
 import comchangs.toyproject.fds.event.RemittanceEvent;
 import comchangs.toyproject.fds.event.WithdrawEvent;
+import comchangs.toyproject.fds.rule.RuleA;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.easyrules.api.Rule;
+import org.easyrules.api.RuleListener;
+import org.easyrules.api.RulesEngine;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import static org.easyrules.core.RulesEngineBuilder.aNewRulesEngine;
 
 /**
  * Created by comchangs on 1/3/17.
@@ -18,6 +24,8 @@ public class Detector implements Runnable
   private static final Logger logger = LogManager.getLogger(Detector.class);
   private LinkedBlockingQueue queue = null;
   private ConcurrentHashMap accountTrackingMap = null;
+  private RuleA ruleA = null;
+  private RulesEngine rulesEngine = null;
 
   public Detector(LinkedBlockingQueue queue, ConcurrentHashMap accountTrackingMap)
   {
@@ -34,16 +42,16 @@ public class Detector implements Runnable
       AccountTrackingInformation accountTrackingInformation = null;
 
       if (event instanceof NewAccountEvent) {
-        logger.debug("NewAccountEvent: " + accountNumber);
         accountNumber = ((NewAccountEvent) event).getAccountNumber();
+        logger.debug("NewAccountEvent: " + accountNumber);
         accountTrackingMap.put(
             accountNumber,
             new AccountTrackingInformation(((NewAccountEvent) event).getIssuedTimestamp())
         );
         logger.debug(accountTrackingMap);
       } else if (event instanceof DepositEvent) {
-        logger.debug("DepositEvent: " + accountNumber);
         accountNumber = ((DepositEvent) event).getAccountNumber();
+        logger.debug("DepositEvent: " + accountNumber);
         //TODO: if the account still created, how to do
         accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
         accountTrackingInformation.deposit(((DepositEvent) event).getDepositAmount());
@@ -55,8 +63,8 @@ public class Detector implements Runnable
           );
         }
       } else if (event instanceof WithdrawEvent) {
-        logger.debug("WithdrawEvent: " + accountNumber);
         accountNumber = ((WithdrawEvent) event).getAccountNumber();
+        logger.debug("WithdrawEvent: " + accountNumber);
         //TODO: if the account still created, how to do
         accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
         accountTrackingInformation.withdraw(((WithdrawEvent) event).getWithdrawalAmount());
@@ -68,8 +76,8 @@ public class Detector implements Runnable
           );
         }
       } else if (event instanceof RemittanceEvent) {
-        logger.debug("RemittanceEvent: " + accountNumber);
         accountNumber = ((RemittanceEvent) event).getAccountNumber();
+        logger.debug("RemittanceEvent: " + accountNumber);
         //TODO: if the account still created, how to do
         accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
         accountTrackingInformation.remittance(((RemittanceEvent) event).getRemittanceAmount());
@@ -92,15 +100,45 @@ public class Detector implements Runnable
   }
 
   private boolean isPassRules(AccountTrackingInformation accountTrackingInformation) {
-    //TODO: How to check by rules
-    logger.info("Pass: " + accountTrackingInformation);
+    ruleA = new RuleA(accountTrackingInformation);
+    rulesEngine.registerRule(ruleA);
+
+    rulesEngine.fireRules();
+
     return true;
   }
 
-  @Override
   public void run()
   {
     logger.info("Detector thread is running");
+
+
+
+    rulesEngine = aNewRulesEngine()
+        .named("Fraud Detection")
+        .withRuleListener(new RuleListener()
+        {
+          public boolean beforeEvaluate(Rule rule)
+          {
+            return false;
+          }
+
+          public void beforeExecute(Rule rule)
+          {
+
+          }
+
+          public void onSuccess(Rule rule)
+          {
+            logger.info("Passed");
+          }
+
+          public void onFailure(Rule rule, Exception e)
+          {
+            logger.info("Rejected");
+          }
+        })
+        .build();
 
     while(true) {
       process();
