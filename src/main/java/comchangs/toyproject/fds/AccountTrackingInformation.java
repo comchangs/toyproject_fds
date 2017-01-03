@@ -85,15 +85,18 @@ public class AccountTrackingInformation
     FinalBalance = finalBalance;
   }
 
-  public void deposit(long depositAmount) {
+  public void deposit(long issuedTimestamp, long depositAmount) {
+    lastDepositTimestamp = issuedTimestamp;
     FinalBalance += depositAmount;
   }
 
-  public void withdraw(long withdrawalAmount) {
+  public void withdraw(long issuedTimestamp, long withdrawalAmount) {
+    lastWithdrawTimestamp = issuedTimestamp;
     FinalBalance -= withdrawalAmount;
   }
 
-  public void remittance(long remittanceAmount) {
+  public void remittance(long issuedTimestamp, long remittanceAmount) {
+    lastRemittanceTimestamp = issuedTimestamp;
     FinalBalance -= remittanceAmount;
   }
 
@@ -104,6 +107,7 @@ public class AccountTrackingInformation
            "accountCreationTimestamp=" + accountCreationTimestamp +
            ", lastDepositTimestamp=" + lastDepositTimestamp +
            ", lastWithdrawTimestamp=" + lastWithdrawTimestamp +
+           ", lastRemittanceTimestamp=" + lastRemittanceTimestamp +
            ", FinalBalance=" + FinalBalance +
            '}';
   }

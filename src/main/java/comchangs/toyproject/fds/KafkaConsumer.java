@@ -12,12 +12,13 @@ import java.util.concurrent.LinkedBlockingQueue;
  * Created by comchangs on 02/01/2017.
  *
  * This class is KafkaConsumer for a Demonstration
- * It make sample events and than insert into a queue to detect
+ * It makes sample events and than insert into a queue to detect
  */
 
 public class KafkaConsumer implements Runnable
 {
   private static final Logger logger = LogManager.getLogger(Detector.class);
+  private static long lastGenerationTimestamp = System.currentTimeMillis();
   private LinkedBlockingQueue queue = null;
 
   public KafkaConsumer(LinkedBlockingQueue queue)
@@ -49,9 +50,14 @@ public class KafkaConsumer implements Runnable
 
 
     try {
-      queue.put(new NewAccountEvent(1483452666l, 110345678123l, 12345));
-      queue.put(new DepositEvent(1483435041l, 110345678123l, 12345, 990000l));
-      queue.put(new WithdrawEvent(1483438921l, 110345678123l, 12345, 980000l));
+
+      long difference = System.currentTimeMillis() - lastGenerationTimestamp;
+
+      queue.put(new NewAccountEvent(1483452666l + difference, 110345678123l, 12345));
+      queue.put(new DepositEvent(1483435041l + difference, 110345678123l, 12345, 990000l));
+      queue.put(new WithdrawEvent(1483438921l + difference, 110345678123l, 12345, 980000l));
+
+      lastGenerationTimestamp = System.currentTimeMillis();
     }
     catch (InterruptedException e) {
       logger.info( "InterruptedException: " + e.getStackTrace() );

@@ -52,11 +52,15 @@ public class Detector implements Runnable
       } else if (event instanceof DepositEvent) {
         accountNumber = ((DepositEvent) event).getAccountNumber();
         logger.debug("DepositEvent: " + accountNumber);
-        //TODO: if the account still created, how to do
-        accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
-        accountTrackingInformation.deposit(((DepositEvent) event).getDepositAmount());
 
-        if (isPassRules(accountTrackingInformation)) {
+        while(accountTrackingMap.get(accountNumber) == null) {
+          Thread.sleep(10);
+        }
+
+        accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
+        accountTrackingInformation.deposit(((DepositEvent) event).getIssuedTimestamp(), ((DepositEvent) event).getDepositAmount());
+
+        if (isPassRules("Deposit", accountTrackingInformation)) {
           accountTrackingMap.put(
               accountNumber,
               new AccountTrackingInformation(((DepositEvent) event).getIssuedTimestamp())
@@ -65,11 +69,15 @@ public class Detector implements Runnable
       } else if (event instanceof WithdrawEvent) {
         accountNumber = ((WithdrawEvent) event).getAccountNumber();
         logger.debug("WithdrawEvent: " + accountNumber);
-        //TODO: if the account still created, how to do
-        accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
-        accountTrackingInformation.withdraw(((WithdrawEvent) event).getWithdrawalAmount());
 
-        if (isPassRules(accountTrackingInformation)) {
+        while(accountTrackingMap.get(accountNumber) == null) {
+          Thread.sleep(10);
+        }
+
+        accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
+        accountTrackingInformation.withdraw(((WithdrawEvent) event).getIssuedTimestamp(), ((WithdrawEvent) event).getWithdrawalAmount());
+
+        if (isPassRules("Withdraw", accountTrackingInformation)) {
           accountTrackingMap.put(
               accountNumber,
               new AccountTrackingInformation(((WithdrawEvent) event).getIssuedTimestamp())
@@ -78,11 +86,15 @@ public class Detector implements Runnable
       } else if (event instanceof RemittanceEvent) {
         accountNumber = ((RemittanceEvent) event).getAccountNumber();
         logger.debug("RemittanceEvent: " + accountNumber);
-        //TODO: if the account still created, how to do
-        accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
-        accountTrackingInformation.remittance(((RemittanceEvent) event).getRemittanceAmount());
 
-        if (isPassRules(accountTrackingInformation)) {
+        while(accountTrackingMap.get(accountNumber) == null) {
+          Thread.sleep(10);
+        }
+
+        accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
+        accountTrackingInformation.remittance(((RemittanceEvent) event).getIssuedTimestamp(), ((RemittanceEvent) event).getRemittanceAmount());
+
+        if (isPassRules("Remittance", accountTrackingInformation)) {
           accountTrackingMap.put(
               accountNumber,
               new AccountTrackingInformation(((RemittanceEvent) event).getIssuedTimestamp())
@@ -99,8 +111,8 @@ public class Detector implements Runnable
     }
   }
 
-  private boolean isPassRules(AccountTrackingInformation accountTrackingInformation) {
-    ruleA = new RuleA(accountTrackingInformation);
+  private boolean isPassRules(String eventType, AccountTrackingInformation accountTrackingInformation) {
+    ruleA = new RuleA(eventType, accountTrackingInformation);
     rulesEngine.registerRule(ruleA);
 
     rulesEngine.fireRules();
@@ -116,28 +128,6 @@ public class Detector implements Runnable
 
     rulesEngine = aNewRulesEngine()
         .named("Fraud Detection")
-        .withRuleListener(new RuleListener()
-        {
-          public boolean beforeEvaluate(Rule rule)
-          {
-            return false;
-          }
-
-          public void beforeExecute(Rule rule)
-          {
-
-          }
-
-          public void onSuccess(Rule rule)
-          {
-            logger.info("Passed");
-          }
-
-          public void onFailure(Rule rule, Exception e)
-          {
-            logger.info("Rejected");
-          }
-        })
         .build();
 
     while(true) {
