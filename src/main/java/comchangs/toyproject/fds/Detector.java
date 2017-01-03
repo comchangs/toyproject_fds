@@ -37,6 +37,8 @@ public class Detector implements Runnable
 
     try {
       Object event = queue.take();
+
+      long start = System.currentTimeMillis();
       logger.debug("Received: " + event);
       long accountNumber = 0;
       AccountTrackingInformation accountTrackingInformation = null;
@@ -54,7 +56,7 @@ public class Detector implements Runnable
         logger.debug("DepositEvent: " + accountNumber);
 
         while(accountTrackingMap.get(accountNumber) == null) {
-          Thread.sleep(10);
+          Thread.sleep(5);
         }
 
         accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
@@ -71,7 +73,7 @@ public class Detector implements Runnable
         logger.debug("WithdrawEvent: " + accountNumber);
 
         while(accountTrackingMap.get(accountNumber) == null) {
-          Thread.sleep(10);
+          Thread.sleep(5);
         }
 
         accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
@@ -88,7 +90,7 @@ public class Detector implements Runnable
         logger.debug("RemittanceEvent: " + accountNumber);
 
         while(accountTrackingMap.get(accountNumber) == null) {
-          Thread.sleep(10);
+          Thread.sleep(5);
         }
 
         accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
@@ -101,6 +103,10 @@ public class Detector implements Runnable
           );
         }
       }
+
+      long end = System.currentTimeMillis();
+
+      System.out.println( "Detection Time : " + (end - start) + "ms" );
 
     } catch (InterruptedException e) {
       logger.info( "InterruptedException: " + e.getStackTrace() );
