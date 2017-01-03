@@ -27,8 +27,6 @@ public class KafkaConsumer implements Runnable
 
   private void consume() {
     // Generate sample event
-    // TODO: Generate sample event like in event
-
     /**
      * NewAccountEvent
      *  - accountNumber: 110-345678-123
@@ -57,6 +55,7 @@ public class KafkaConsumer implements Runnable
     }
     catch (InterruptedException e) {
       logger.info( "InterruptedException: " + e.getStackTrace() );
+      e.printStackTrace();
     }
   }
 
@@ -67,12 +66,14 @@ public class KafkaConsumer implements Runnable
 
     while(true) {
       consume();
+      logger.info("Receiving...");
 
       try {
         Thread.sleep(10000);
       }
       catch (InterruptedException e) {
         logger.info( "InterruptedException: " + e.getStackTrace() );
+        e.printStackTrace();
       }
     }
   }
