@@ -13,7 +13,7 @@ public class NewAccountEvent
   {
   }
 
-  public NewAccountEvent(long accountNumber, int clientNumber, long issuedTimestamp)
+  public NewAccountEvent(long issuedTimestamp, long accountNumber, int clientNumber)
   {
     this.accountNumber = accountNumber;
     this.clientNumber = clientNumber;

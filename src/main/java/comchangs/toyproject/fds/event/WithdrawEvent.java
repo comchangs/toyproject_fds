@@ -14,7 +14,7 @@ public class WithdrawEvent
   {
   }
 
-  public WithdrawEvent(long issuedTimestamp, long clientNumber, long accountNumber, long withdrawalAmount)
+  public WithdrawEvent(long issuedTimestamp, long accountNumber, long clientNumber, long withdrawalAmount)
   {
     this.issuedTimestamp = issuedTimestamp;
     this.clientNumber = clientNumber;

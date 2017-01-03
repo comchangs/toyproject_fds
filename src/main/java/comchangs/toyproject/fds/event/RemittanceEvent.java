@@ -22,8 +22,8 @@ public class RemittanceEvent
 
   public RemittanceEvent(
       long issuedTimestamp,
-      int clientNumber,
       long accountNumber,
+      int clientNumber,
       long remittanceAccountNumber,
       long balanceBeforeRemittance,
       byte[] remittanceBankName,

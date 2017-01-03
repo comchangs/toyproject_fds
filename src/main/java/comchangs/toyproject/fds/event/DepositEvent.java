@@ -14,7 +14,7 @@ public class DepositEvent
   {
   }
 
-  public DepositEvent(long issuedTimestamp, int clientNumber, long accountNumber, long depositAmount)
+  public DepositEvent(long issuedTimestamp, long accountNumber, int clientNumber, long depositAmount)
   {
     this.issuedTimestamp = issuedTimestamp;
     this.clientNumber = clientNumber;
