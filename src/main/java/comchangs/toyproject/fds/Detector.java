@@ -44,6 +44,7 @@ public class Detector implements Runnable
       } else if (event instanceof DepositEvent) {
         logger.debug("DepositEvent: " + accountNumber);
         accountNumber = ((DepositEvent) event).getAccountNumber();
+        //TODO: if the account still created, how to do
         accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
         accountTrackingInformation.deposit(((DepositEvent) event).getDepositAmount());
 
@@ -56,6 +57,7 @@ public class Detector implements Runnable
       } else if (event instanceof WithdrawEvent) {
         logger.debug("WithdrawEvent: " + accountNumber);
         accountNumber = ((WithdrawEvent) event).getAccountNumber();
+        //TODO: if the account still created, how to do
         accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
         accountTrackingInformation.withdraw(((WithdrawEvent) event).getWithdrawalAmount());
 
@@ -68,6 +70,7 @@ public class Detector implements Runnable
       } else if (event instanceof RemittanceEvent) {
         logger.debug("RemittanceEvent: " + accountNumber);
         accountNumber = ((RemittanceEvent) event).getAccountNumber();
+        //TODO: if the account still created, how to do
         accountTrackingInformation = (AccountTrackingInformation) accountTrackingMap.get(accountNumber);
         accountTrackingInformation.remittance(((RemittanceEvent) event).getRemittanceAmount());
 
