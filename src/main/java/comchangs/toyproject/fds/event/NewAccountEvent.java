@@ -53,7 +53,7 @@ public class NewAccountEvent
   @Override
   public String toString()
   {
-    return "DepositEvent{" +
+    return "NewAccountEvent{" +
            "accountNumber=" + accountNumber +
            ", clientNumber=" + clientNumber +
            ", issuedTimestamp=" + issuedTimestamp +
