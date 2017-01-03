@@ -1,4 +1,4 @@
-package comchangs.toyproject.fds.model;
+package comchangs.toyproject.fds.event;
 
 import java.util.Arrays;
 

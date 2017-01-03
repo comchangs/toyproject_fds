@@ -1,25 +1,25 @@
-package comchangs.toyproject.fds.model;
+package comchangs.toyproject.fds.event;
 
 /**
  * Created by comchangs on 02/01/2017.
  */
-public class WithdrawEvent
+public class DepositEvent
 {
   private long issuedTimestamp;
-  private long clientNumber;
+  private int clientNumber;
   private long accountNumber;
-  private long WithdrawalAmount;
+  private long depositAmount;
 
-  public WithdrawEvent()
+  public DepositEvent()
   {
   }
 
-  public WithdrawEvent(long issuedTimestamp, long clientNumber, long accountNumber, long withdrawalAmount)
+  public DepositEvent(long issuedTimestamp, int clientNumber, long accountNumber, long depositAmount)
   {
     this.issuedTimestamp = issuedTimestamp;
     this.clientNumber = clientNumber;
     this.accountNumber = accountNumber;
-    WithdrawalAmount = withdrawalAmount;
+    this.depositAmount = depositAmount;
   }
 
   public long getIssuedTimestamp()
@@ -37,7 +37,7 @@ public class WithdrawEvent
     return clientNumber;
   }
 
-  public void setClientNumber(long clientNumber)
+  public void setClientNumber(int clientNumber)
   {
     this.clientNumber = clientNumber;
   }
@@ -52,24 +52,24 @@ public class WithdrawEvent
     this.accountNumber = accountNumber;
   }
 
-  public long getWithdrawalAmount()
+  public long getDepositAmount()
   {
-    return WithdrawalAmount;
+    return depositAmount;
   }
 
-  public void setWithdrawalAmount(long withdrawalAmount)
+  public void setDepositAmount(long depositAmount)
   {
-    WithdrawalAmount = withdrawalAmount;
+    this.depositAmount = depositAmount;
   }
 
   @Override
   public String toString()
   {
-    return "WithdrawEvent{" +
+    return "DepositEvent{" +
            "issuedTimestamp=" + issuedTimestamp +
            ", clientNumber=" + clientNumber +
            ", accountNumber=" + accountNumber +
-           ", WithdrawalAmount=" + WithdrawalAmount +
+           ", depositAmount=" + depositAmount +
            '}';
   }
 }

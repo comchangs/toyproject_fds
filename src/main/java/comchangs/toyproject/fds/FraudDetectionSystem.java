@@ -26,6 +26,7 @@ public class FraudDetectionSystem
     queue = new LinkedBlockingQueue<Object>();
 
     // Generate sample event
+    // TODO: Generate sample event like in event
     try {
       for (int i = 0; i < 1000; i++)
       queue.put("" + i);

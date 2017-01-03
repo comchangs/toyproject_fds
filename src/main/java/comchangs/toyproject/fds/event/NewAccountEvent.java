@@ -1,4 +1,4 @@
-package comchangs.toyproject.fds.model;
+package comchangs.toyproject.fds.event;
 
 /**
  * Created by comchangs on 02/01/2017.
