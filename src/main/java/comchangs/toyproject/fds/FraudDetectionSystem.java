@@ -34,6 +34,7 @@ public class FraudDetectionSystem
 
     executorService = Executors.newFixedThreadPool(FraudDetectionSystemProperties.getNumThreads());
     queue = new LinkedBlockingQueue<Object>();
+    accountTrackingMap = new ConcurrentHashMap<Long, AccountTrackingInformation>();
 
     // Demo KafkaConsumer
     executorService.execute(new KafkaConsumer(queue));
