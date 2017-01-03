@@ -48,7 +48,7 @@ public class FraudDetectionSystem
       public void run()
       {
         logger.info( "Starting thread pool shutdown..." );
-        executorService.shutdownNow();
+        executorService.shutdown();
         logger.info( "Thread pool shutdown complete." );
       }
     };
