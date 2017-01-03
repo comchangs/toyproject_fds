@@ -10,6 +10,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by comchangs on 02/01/2017.
+ *
+ * Assume
+ *  - Account Number is in Long.max_value
+ *  - Client Number is in Integer.max_value
+ *  - Maximum balance is in Long.max_value
+ *  - Remittance Bank Name is string
+ *  - Remittance Account Holder Name is string
+ *
  */
 public class FraudDetectionSystem
 {
