@@ -1,5 +1,8 @@
 package comchangs.toyproject.fds;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -9,40 +12,41 @@ import java.util.Properties;
  */
 public class FraudDetectionSystemProperties
 {
-  private static String globalLoggerName = null;
-  private static int numThreads = 10;
+  private static final Logger logger = LogManager.getLogger(FraudDetectionSystem.class);
 
-  public static String getGlobalLoggerName() {
-    return globalLoggerName;
-  }
+  private static int numThreads = 10;
 
   public static int getNumThreads() {
     return numThreads;
   }
 
-  static void ReadProperty(String PropFile) {
-    Properties prop = new Properties();
-    FileInputStream ifStream = null;
+  public static void ReadProperty(String[] PropFile) {
 
-    try {
-      ifStream = new FileInputStream(PropFile);
-      prop.load(ifStream);
+    if (PropFile.length > 0) {
+      Properties prop = new Properties();
+      String filePath = PropFile[0];
 
-      globalLoggerName = prop.getProperty("fds.globalLoggerName");
-      numThreads = Integer.parseInt(prop.getProperty("fds.numThreads"));
-    } catch (IOException ex) {
-      System.out.println("Property file: " + PropFile + " reading error") ;
-    } finally {
-      try{
-        if(ifStream != null) ifStream.close();
-      } catch (IOException ex) {
-        System.out.println("Can't close the input file") ;
+      try {
+        logger.info("Start reading properties from " + filePath);
+        prop.load(new FileInputStream(filePath));
+
+        numThreads = Integer.parseInt(prop.getProperty("fds.numThreads"));
+
+      } catch (IOException e) {
+        logger.error("Cannot read properties");
+        System.exit(1);
+        e.printStackTrace();
       }
+
+      logger.info("=== Fraud Detection System Properties ===");
+      for (String name : prop.stringPropertyNames()) {
+        if (name.startsWith("fds")) {
+          String value = prop.getProperty(name);
+          logger.info("set property [" + name + "] : " + value);
+        }
+      }
+      logger.info("==============================");
     }
 
-    System.out.println("=== Fraud Detection System Properties ===");
-    System.out.println("globalLoggerName: " + globalLoggerName);
-    System.out.println("numThreads: " + numThreads);
-    System.out.println("==============================");
   }
 }
