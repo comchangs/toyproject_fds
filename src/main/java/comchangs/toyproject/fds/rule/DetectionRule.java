@@ -5,5 +5,5 @@ package comchangs.toyproject.fds.rule;
  */
 public interface DetectionRule
 {
-  public boolean check();
+  boolean check();
 }

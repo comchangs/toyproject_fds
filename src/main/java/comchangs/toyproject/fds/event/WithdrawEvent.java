@@ -8,7 +8,7 @@ public class WithdrawEvent
   private long issuedTimestamp;
   private long clientNumber;
   private long accountNumber;
-  private long WithdrawalAmount;
+  private long withdrawalAmount;
 
   public WithdrawEvent()
   {
@@ -19,7 +19,7 @@ public class WithdrawEvent
     this.issuedTimestamp = issuedTimestamp;
     this.clientNumber = clientNumber;
     this.accountNumber = accountNumber;
-    WithdrawalAmount = withdrawalAmount;
+    this.withdrawalAmount = withdrawalAmount;
   }
 
   public long getIssuedTimestamp()
@@ -54,12 +54,12 @@ public class WithdrawEvent
 
   public long getWithdrawalAmount()
   {
-    return WithdrawalAmount;
+    return withdrawalAmount;
   }
 
   public void setWithdrawalAmount(long withdrawalAmount)
   {
-    WithdrawalAmount = withdrawalAmount;
+    withdrawalAmount = withdrawalAmount;
   }
 
   @Override
@@ -69,7 +69,7 @@ public class WithdrawEvent
            "issuedTimestamp=" + issuedTimestamp +
            ", clientNumber=" + clientNumber +
            ", accountNumber=" + accountNumber +
-           ", WithdrawalAmount=" + WithdrawalAmount +
+           ", withdrawalAmount=" + withdrawalAmount +
            '}';
   }
 }

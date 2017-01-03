@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class KafkaConsumer implements Runnable
 {
   private static final Logger logger = LogManager.getLogger(Detector.class);
-  private LinkedBlockingQueue queue;
+  private LinkedBlockingQueue queue = null;
 
   public KafkaConsumer(LinkedBlockingQueue queue)
   {
