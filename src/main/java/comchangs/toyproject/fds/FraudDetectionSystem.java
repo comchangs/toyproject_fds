@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by comchangs on 02/01/2017.
@@ -25,15 +26,8 @@ public class FraudDetectionSystem
     executorService = Executors.newFixedThreadPool(FraudDetectionSystemProperties.getNumThreads());
     queue = new LinkedBlockingQueue<Object>();
 
-    // Generate sample event
-    // TODO: Generate sample event like in event
-    try {
-      for (int i = 0; i < 1000; i++)
-      queue.put("" + i);
-    }
-    catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    // Demo KafkaConsumer
+    executorService.execute(new KafkaConsumer(queue));
 
     for (int i = 0; i < FraudDetectionSystemProperties.getNumThreads(); i++) {
       executorService.execute(new Detector(queue));

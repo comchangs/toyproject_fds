@@ -24,8 +24,9 @@ public class Detector implements Runnable
       //TODO: DetectionTask by rules
       logger.info(queue.take());
     } catch (InterruptedException e) {
+      logger.info( "InterruptedException: " + e.getStackTrace() );
     } catch (Exception e) {
-      logger.error("Exception: " + e);
+      logger.error("Exception: " + e.getStackTrace());
     }
   }
 
