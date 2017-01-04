@@ -7,8 +7,11 @@ public class AccountTrackingInformation
 {
   private long accountCreationTimestamp;
   private long lastDepositTimestamp;
+  private long lastDepositAmount;
   private long lastWithdrawTimestamp;
+  private long lastWithdrawAmount;
   private long lastRemittanceTimestamp;
+  private long lastRemittanceAmount;
   private long FinalBalance;
 
   public AccountTrackingInformation()
@@ -23,15 +26,21 @@ public class AccountTrackingInformation
   public AccountTrackingInformation(
       long accountCreationTimestamp,
       long lastDepositTimestamp,
+      long lastDepositAmount,
       long lastWithdrawTimestamp,
+      long lastWithdrawAmount,
       long lastRemittanceTimestamp,
+      long lastRemittanceAmount,
       long finalBalance
   )
   {
     this.accountCreationTimestamp = accountCreationTimestamp;
     this.lastDepositTimestamp = lastDepositTimestamp;
+    this.lastDepositAmount = lastDepositAmount;
     this.lastWithdrawTimestamp = lastWithdrawTimestamp;
+    this.lastWithdrawAmount = lastWithdrawAmount;
     this.lastRemittanceTimestamp = lastRemittanceTimestamp;
+    this.lastRemittanceAmount = lastRemittanceAmount;
     FinalBalance = finalBalance;
   }
 
@@ -85,18 +94,51 @@ public class AccountTrackingInformation
     FinalBalance = finalBalance;
   }
 
+  public long getLastDepositAmount()
+  {
+    return lastDepositAmount;
+  }
+
+  public void setLastDepositAmount(long lastDepositAmount)
+  {
+    this.lastDepositAmount = lastDepositAmount;
+  }
+
+  public long getLastWithdrawAmount()
+  {
+    return lastWithdrawAmount;
+  }
+
+  public void setLastWithdrawAmount(long lastWithdrawAmount)
+  {
+    this.lastWithdrawAmount = lastWithdrawAmount;
+  }
+
+  public long getLastRemittanceAmount()
+  {
+    return lastRemittanceAmount;
+  }
+
+  public void setLastRemittanceAmount(long lastRemittanceAmount)
+  {
+    this.lastRemittanceAmount = lastRemittanceAmount;
+  }
+
   public void deposit(long issuedTimestamp, long depositAmount) {
     lastDepositTimestamp = issuedTimestamp;
+    lastDepositAmount = depositAmount;
     FinalBalance += depositAmount;
   }
 
   public void withdraw(long issuedTimestamp, long withdrawalAmount) {
     lastWithdrawTimestamp = issuedTimestamp;
+    lastWithdrawAmount = withdrawalAmount;
     FinalBalance -= withdrawalAmount;
   }
 
   public void remittance(long issuedTimestamp, long remittanceAmount) {
     lastRemittanceTimestamp = issuedTimestamp;
+    lastRemittanceAmount = remittanceAmount;
     FinalBalance -= remittanceAmount;
   }
 

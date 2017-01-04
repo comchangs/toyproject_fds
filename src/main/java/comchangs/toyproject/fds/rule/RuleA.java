@@ -31,6 +31,7 @@ public class RuleA
     return
         eventType.equals("Withdraw") &&
         accountTrackingInformation.getFinalBalance() <= 10000 &&
+        accountTrackingInformation.getLastDepositAmount() >= 900000 && accountTrackingInformation.getLastDepositAmount() <= 1000000 &&
         accountTrackingInformation.getLastWithdrawTimestamp() - accountTrackingInformation.getLastDepositTimestamp() <= 2 * 60 * 60 * 1000 &&
         accountTrackingInformation.getLastWithdrawTimestamp() - accountTrackingInformation.getAccountCreationTimestamp() <= 7 * 24 * 60 * 60 * 1000;
   }
