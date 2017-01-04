@@ -20,9 +20,13 @@ public class RuleATest
     accountTrackingInformation.setFinalBalance(10000l);
 
     RuleA ruleA = new RuleA("Withdraw", accountTrackingInformation);
+    Assert.assertTrue(ruleA.evaluate());
 
-    boolean result = ruleA.evaluate();
+    ruleA = new RuleA("Deposit", accountTrackingInformation);
+    Assert.assertFalse(ruleA.evaluate());
 
-    Assert.assertTrue(result);
+    accountTrackingInformation.setLastDepositAmount(100000l);
+    ruleA = new RuleA("Withdraw", accountTrackingInformation);
+    Assert.assertFalse(ruleA.evaluate());
   }
 }
