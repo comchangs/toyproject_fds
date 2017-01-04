@@ -5,7 +5,6 @@ import comchangs.toyproject.fds.event.NewAccountEvent;
 import comchangs.toyproject.fds.event.WithdrawEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -27,8 +26,9 @@ public class KafkaConsumer implements Runnable
   }
 
   private void consume() {
-    // Generate sample event
     /**
+     * Generate sample events like this
+     *
      * NewAccountEvent
      *  - accountNumber: 110-345678-123
      *  - clientNumber: 12345

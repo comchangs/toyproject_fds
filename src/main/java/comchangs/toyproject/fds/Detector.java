@@ -7,13 +7,9 @@ import comchangs.toyproject.fds.event.WithdrawEvent;
 import comchangs.toyproject.fds.rule.RuleA;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.easyrules.api.Rule;
-import org.easyrules.api.RuleListener;
 import org.easyrules.api.RulesEngine;
-
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
-
 import static org.easyrules.core.RulesEngineBuilder.aNewRulesEngine;
 
 /**
